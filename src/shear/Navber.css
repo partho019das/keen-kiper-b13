@@ -1,0 +1,7 @@
+.nav-links a.active {
+  background-color: #244D3F;
+  text-decoration: none;
+  color: white;
+
+padding: 2px;
+}

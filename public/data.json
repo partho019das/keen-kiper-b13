@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "picture": "https://randomuser.me/api/portraits/men/1.jpg",
+    "email": "john@example.com",
+    "days_since_contact": 12,
+    "status": "almost due",
+    "tags": ["college", "close friend"],
+    "bio": "Met in university during engineering studies. We often talk about tech and hiking trips.",
+    "goal": 14,
+    "next_due_date": "2026-04-25"
+  },
+  {
+    "id": 2,
+    "name": "Michael Smith",
+    "picture": "https://randomuser.me/api/portraits/men/2.jpg",
+    "email": "michael@example.com",
+    "days_since_contact": 30,
+    "status": "overdue",
+    "tags": ["work", "colleague"],
+    "bio": "Worked together on multiple software projects. Very reliable teammate.",
+    "goal": 20,
+    "next_due_date": "2026-03-30"
+  },
+  {
+    "id": 3,
+    "name": "David Johnson",
+    "picture": "https://randomuser.me/api/portraits/men/3.jpg",
+    "email": "david@example.com",
+    "days_since_contact": 5,
+    "status": "on-track",
+    "tags": ["gym", "fitness"],
+    "bio": "Gym partner who keeps me motivated every morning.",
+    "goal": 10,
+    "next_due_date": "2026-04-18"
+  },
+  {
+    "id": 4,
+    "name": "Chris Brown",
+    "picture": "https://randomuser.me/api/portraits/men/4.jpg",
+    "email": "chris@example.com",
+    "days_since_contact": 18,
+    "status": "almost due",
+    "tags": ["school", "childhood"],
+    "bio": "Childhood friend from school days. Still connected through gaming.",
+    "goal": 15,
+    "next_due_date": "2026-04-28"
+  },
+  {
+    "id": 5,
+    "name": "James Wilson",
+    "picture": "https://randomuser.me/api/portraits/men/5.jpg",
+    "email": "james@example.com",
+    "days_since_contact": 45,
+    "status": "overdue",
+    "tags": ["travel", "adventure"],
+    "bio": "Met while traveling in Cox’s Bazar. Shared many adventure stories.",
+    "goal": 25,
+    "next_due_date": "2026-03-15"
+  },
+  {
+    "id": 6,
+    "name": "Robert Taylor",
+    "picture": "https://randomuser.me/api/portraits/men/6.jpg",
+    "email": "robert@example.com",
+    "days_since_contact": 2,
+    "status": "on-track",
+    "tags": ["office", "team lead"],
+    "bio": "My team lead who helps me grow professionally every day.",
+    "goal": 8,
+    "next_due_date": "2026-04-20"
+  },
+  {
+    "id": 7,
+    "name": "Daniel Harris",
+    "picture": "https://randomuser.me/api/portraits/men/7.jpg",
+    "email": "daniel@example.com",
+    "days_since_contact": 22,
+    "status": "almost due",
+    "tags": ["coding", "hackathon"],
+    "bio": "Met at a hackathon. We love building side projects together.",
+    "goal": 18,
+    "next_due_date": "2026-04-30"
+  },
+  {
+    "id": 8,
+    "name": "Emily Clark",
+    "picture": "https://randomuser.me/api/portraits/women/1.jpg",
+    "email": "emily@example.com",
+    "days_since_contact": 7,
+    "status": "on-track",
+    "tags": ["design", "creative"],
+    "bio": "UI/UX designer friend who inspires creative thinking.",
+    "goal": 12,
+    "next_due_date": "2026-04-22"
+  },
+  {
+    "id": 9,
+    "name": "Sophia Martinez",
+    "picture": "https://randomuser.me/api/portraits/women/2.jpg",
+    "email": "sophia@example.com",
+    "days_since_contact": 28,
+    "status": "overdue",
+    "tags": ["university", "best friend"],
+    "bio": "University best friend. We shared everything from notes to memories.",
+    "goal": 30,
+    "next_due_date": "2026-03-28"
+  },
+  {
+    "id": 10,
+    "name": "Olivia Anderson",
+    "picture": "https://randomuser.me/api/portraits/women/3.jpg",
+    "email": "olivia@example.com",
+    "days_since_contact": 4,
+    "status": "on-track",
+    "tags": ["startup", "business"],
+    "bio": "Startup co-founder friend. Always full of innovative ideas.",
+    "goal": 9,
+    "next_due_date": "2026-04-19"
+  }
+]
