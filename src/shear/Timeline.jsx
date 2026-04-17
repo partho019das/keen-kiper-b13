@@ -1,13 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 const Timeline = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("all");
   const [open, setOpen] = useState(false);
 
+  const boxRef = useRef();
+
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("timeline")) || [];
     setData(saved);
+  }, []);
+
+  // 🔥 close dropdown when click outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (boxRef.current && !boxRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const filteredData =
@@ -21,10 +35,12 @@ const Timeline = () => {
   };
 
   const getLabel = () => {
-    if (filter === "all") return "All Activities";
-    if (filter === "call") return "Call";
-    if (filter === "message") return "Message";
-    if (filter === "video") return "Video";
+    switch (filter) {
+      case "call": return "Call";
+      case "message": return "Message";
+      case "video": return "Video";
+      default: return "All Activities";
+    }
   };
 
   return (
@@ -33,51 +49,33 @@ const Timeline = () => {
       <h1 className="text-2xl font-bold mb-5">Timeline</h1>
 
       {/* 🔥 SEARCH STYLE FILTER */}
-      <div className="relative w-72 mb-5">
+      <div ref={boxRef} className="relative w-72 mb-5">
 
         <div
           onClick={() => setOpen(!open)}
-          className="flex justify-between items-center border px-3 py-2 rounded cursor-pointer bg-white"
+          className="flex justify-between items-center border px-3 py-2 rounded bg-white cursor-pointer"
         >
-          <input
-            readOnly
-            value={getLabel()}
-            className="outline-none w-full cursor-pointer"
-          />
-
-          <span>▼</span>
+          <span className="text-gray-700">{getLabel()}</span>
+          <span className="text-gray-400">⌄</span>
         </div>
 
         {open && (
           <div className="absolute left-0 mt-1 w-full bg-white border rounded shadow z-10">
 
-            <div
-              onClick={() => handleSelect("all")}
-              className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-            >
-              All Activities
-            </div>
-
-            <div
-              onClick={() => handleSelect("call")}
-              className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-            >
-              Call
-            </div>
-
-            <div
-              onClick={() => handleSelect("message")}
-              className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-            >
-              Message
-            </div>
-
-            <div
-              onClick={() => handleSelect("video")}
-              className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-            >
-              Video
-            </div>
+            {[
+              { label: "All Activities", value: "all" },
+              { label: "Call", value: "call" },
+              { label: "Message", value: "message" },
+              { label: "Video", value: "video" },
+            ].map(item => (
+              <div
+                key={item.value}
+                onClick={() => handleSelect(item.value)}
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+              >
+                {item.label}
+              </div>
+            ))}
 
           </div>
         )}

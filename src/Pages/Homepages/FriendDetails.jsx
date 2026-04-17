@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams } from 'react-router';
 
 const FriendDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [friend, setFriend] = useState(null);
-
-  // 🔥 ACTION STATE
   const [action, setAction] = useState(null);
 
   useEffect(() => {
@@ -26,60 +23,67 @@ const FriendDetails = () => {
     );
   }
 
+  // ✅ SAVE TO TIMELINE
+  const saveToTimeline = (type) => {
+    const old = JSON.parse(localStorage.getItem("timeline")) || [];
+
+    const newItem = {
+      id: Date.now(),
+      name: friend.name,
+      type,
+      time: new Date().toLocaleString()
+    };
+
+    localStorage.setItem("timeline", JSON.stringify([...old, newItem]));
+  };
+
+  // ✅ CLICK HANDLER
+  const handleAction = (type) => {
+    setAction(type);
+    saveToTimeline(type);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 p-5">
 
-      {/* 🔥 TOP ACTION BAR */}
+      {/* TOP BAR */}
       {action && (
         <div className="mb-5 p-3 bg-blue-100 border rounded flex justify-between items-center">
-          <p className="font-medium">
-            {action === "call" && `📞 You are calling ${friend.name}`}
-            {action === "message" && `💬 You are messaging ${friend.name}`}
-            {action === "video" && `🎥 You are video calling ${friend.name}`}
+          <p>
+            {action === "call" && `📞 Calling ${friend.name}`}
+            {action === "message" && `💬 Messaging ${friend.name}`}
+            {action === "video" && `🎥 Video calling ${friend.name}`}
           </p>
 
-          <button
-            onClick={() => setAction(null)}
-            className="text-red-500 text-sm"
-          >
+          <button onClick={() => setAction(null)} className="text-red-500">
             Close
           </button>
         </div>
       )}
 
-      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-        {/* ================= LEFT ================= */}
+        {/* LEFT */}
         <div className="space-y-5">
 
-          {/* PROFILE */}
-          <div className="shadow-xl p-6 rounded-lg bg-white text-center">
-
-            <img
-              src={friend.picture}
-              className="w-24 h-24 mx-auto rounded-full"
-            />
-
+          <div className="bg-white shadow p-6 rounded text-center">
+            <img src={friend.picture} className="w-24 h-24 mx-auto rounded-full" />
             <h2 className="text-xl font-bold mt-3">{friend.name}</h2>
             <p className="text-gray-500">{friend.email}</p>
-
-            <span className="inline-block mt-2 px-3 py-1 text-xs rounded bg-green-500 text-white">
-              {friend.status}
-            </span>
+            <p className="text-sm mt-2">{friend.status}</p>
           </div>
 
-          {/* LEFT ACTIONS */}
           <div className="space-y-3">
 
-            <div className="shadow-md p-4 rounded-lg bg-white cursor-pointer">
+            <div className="bg-white shadow p-4 rounded cursor-pointer">
               🔕 Snooze
             </div>
 
-            <div className="shadow-md p-4 rounded-lg bg-white cursor-pointer">
+            <div className="bg-white shadow p-4 rounded cursor-pointer">
               📦 Archive
             </div>
 
-            <div className="shadow-md p-4 rounded-lg bg-white cursor-pointer text-red-500">
+            <div className="bg-white shadow p-4 rounded cursor-pointer text-red-500">
               🗑 Delete
             </div>
 
@@ -87,78 +91,67 @@ const FriendDetails = () => {
 
         </div>
 
-        {/* ================= RIGHT ================= */}
-        <div className="md:col-span-2 flex flex-col justify-between">
+        {/* RIGHT */}
+        <div className="md:col-span-2 space-y-5">
 
-          {/* TOP CONTENT */}
-          <div className="space-y-5">
+          <div className="grid grid-cols-3 gap-3">
 
-            {/* INFO */}
-            <div className="grid grid-cols-3 gap-3">
-
-              <div className="shadow-lg p-4 bg-white text-center rounded">
-                <p className="text-sm text-gray-500">Days</p>
-                <h2 className="font-bold">{friend.days_since_contact}</h2>
-              </div>
-
-              <div className="shadow-lg p-4 bg-white text-center rounded">
-                <p className="text-sm text-gray-500">Goal</p>
-                <h2 className="font-bold">{friend.goal}</h2>
-              </div>
-
-              <div className="shadow-lg p-4 bg-white text-center rounded">
-                <p className="text-sm text-gray-500">Next Due</p>
-                <h2 className="font-bold">{friend.next_due_date}</h2>
-              </div>
-
+            <div className="bg-white shadow p-4 text-center rounded">
+              <p>Days</p>
+              <h2 className="font-bold">{friend.days_since_contact}</h2>
             </div>
 
-            {/* RELATIONSHIP */}
-            <div className="shadow-lg p-5 rounded-lg bg-white">
-              <h2 className="font-bold">Relationship Goal</h2>
-              <p className="text-gray-600 mt-2">
-                Stay connected regularly and maintain strong relationship.
-              </p>
+            <div className="bg-white shadow p-4 text-center rounded">
+              <p>Goal</p>
+              <h2 className="font-bold">{friend.goal}</h2>
             </div>
 
-            {/* TAGS */}
-            <div className="shadow-lg p-5 rounded-lg bg-white">
-              <h2 className="font-bold">Tags</h2>
-
-              <div className="flex flex-wrap gap-2 mt-3">
-                {friend.tags?.map((tag, i) => (
-                  <span
-                    key={i}
-                    className="text-xs bg-gray-100 px-2 py-1 rounded"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+            <div className="bg-white shadow p-4 text-center rounded">
+              <p>Next</p>
+              <h2 className="font-bold">{friend.next_due_date}</h2>
             </div>
 
           </div>
 
-          {/* 🔥 ACTION BUTTONS (CLICK ENABLED) */}
-          <div className="grid grid-cols-3 gap-3 mt-6">
+          <div className="bg-white shadow p-5 rounded">
+            <h2 className="font-bold">Relationship Goal</h2>
+            <p className="text-gray-600 mt-2">
+              Stay connected regularly and maintain strong relationship.
+            </p>
+          </div>
+
+          <div className="bg-white shadow p-5 rounded">
+            <h2 className="font-bold">Tags</h2>
+
+            <div className="flex gap-2 flex-wrap mt-3">
+              {friend.tags?.map((tag, i) => (
+                <span key={i} className="bg-gray-100 px-2 py-1 text-xs rounded">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* ACTION BUTTONS */}
+          <div className="grid grid-cols-3 gap-3">
 
             <div
-              onClick={() => setAction("call")}
-              className="shadow-lg p-4 bg-white text-center rounded cursor-pointer hover:bg-gray-100"
+              onClick={() => handleAction("call")}
+              className="bg-white shadow p-4 text-center rounded cursor-pointer"
             >
               📞 Call
             </div>
 
             <div
-              onClick={() => setAction("message")}
-              className="shadow-lg p-4 bg-white text-center rounded cursor-pointer hover:bg-gray-100"
+              onClick={() => handleAction("message")}
+              className="bg-white shadow p-4 text-center rounded cursor-pointer"
             >
               💬 Message
             </div>
 
             <div
-              onClick={() => setAction("video")}
-              className="shadow-lg p-4 bg-white text-center rounded cursor-pointer hover:bg-gray-100"
+              onClick={() => handleAction("video")}
+              className="bg-white shadow p-4 text-center rounded cursor-pointer"
             >
               🎥 Video
             </div>
